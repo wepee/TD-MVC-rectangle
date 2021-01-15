@@ -1,0 +1,15 @@
+@startuml
+participant Actor
+activate TemperatureMCV
+TemperatureMCV -> TemperatureMCV : new TemperatureMCV
+TemperatureMCV -> tempmod : new TemperatureModel
+TemperatureMCV -> tempcontrolC : new TemperatureController
+TemperatureMCV -> tempcontrolF : new TemperatureController
+TemperatureMCV -> pvc : new TemperatureVueCelsius
+TemperatureMCV -> pvf : new TemperatureVueFarenheit
+pvc -> pvc : setView
+pvf -> pvf : setView
+
+deactivate TemperatureMCV
+
+@enduml

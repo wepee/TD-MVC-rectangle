@@ -1,0 +1,47 @@
+@startuml
+participant Actor
+Actor -> ActionListener : actionPerformed
+activate ActionListener
+ActionListener -> TemperatureVue : getDisplay
+activate TemperatureVue
+TemperatureVue --> ActionListener
+deactivate TemperatureVue
+ActionListener -> TemperatureController : fixeDegresC
+activate TemperatureController
+TemperatureController -> TemperatureModel : setC
+activate TemperatureModel
+TemperatureModel -> Observable : setChanged
+activate Observable
+Observable --> TemperatureModel
+deactivate Observable
+TemperatureModel -> Observable : notifyObservers
+activate Observable
+Observable --> TemperatureModel
+deactivate Observable
+TemperatureModel --> TemperatureController
+deactivate TemperatureModel
+TemperatureController -> TemperatureController : control
+activate TemperatureController
+TemperatureController -> TemperatureModel : getC
+activate TemperatureModel
+TemperatureModel --> TemperatureController
+deactivate TemperatureModel
+
+alt T > 40
+    TemperatureController -> TemperatureVue : enableWarningColor
+    activate TemperatureVue
+    TemperatureVue --> TemperatureController
+    deactivate TemperatureVue
+else
+    TemperatureController -> TemperatureVue : disableWarningColor
+    activate TemperatureVue
+    TemperatureVue --> TemperatureController
+    deactivate TemperatureVue
+end
+
+TemperatureController --> TemperatureController
+deactivate TemperatureController
+TemperatureController --> ActionListener
+deactivate TemperatureController
+return
+@enduml

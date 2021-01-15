@@ -1,0 +1,60 @@
+@startuml
+class Vue.TemperatureVueCelsius {
++ void update(Observable,Object)
+}
+class Control.TemperatureController {
+- TemperatureModel model
+- TemperatureVue view
++ void augmenteDegresC()
++ void diminueDegresC()
++ void fixeDegresC(double)
++ void augmenteDegresF()
++ void diminueDegresF()
++ void fixeDegresF(double)
++ void control()
++ void setView(TemperatureVue)
+}
+class Model.TemperatureModel {
+- double temperatureC
++ double getC()
++ void setC(double)
++ double getF()
++ void setF(double)
+}
+class Vue.TemperatureVueFarenheit {
++ void update(Observable,Object)
+}
+abstract class Vue.TemperatureVue {
+# TemperatureModel model
+# TemperatureController controller
+- JFrame temperatureJFrame
+- JTextField display
+- JButton upJButton
+- JButton downJButton
++ void setDisplay(String)
++ void enableWarningColor()
++ void disableWarningColor()
++ double getDisplay()
++ void addDisplayListener(ActionListener)
++ void addUpListener(ActionListener)
++ void addDownListener(ActionListener)
+}
+class TemperatureMVC {
++ {static} void main(String[])
+}
+
+TemperatureMVC --> Vue.TemperatureVueCelsius
+TemperatureMVC --> Vue.TemperatureVueFarenheit
+TemperatureMVC --> Control.TemperatureController
+TemperatureMVC --> Model.TemperatureModel
+
+Vue.TemperatureVueFarenheit --|> Vue.TemperatureVue
+Vue.TemperatureVueCelsius --|> Vue.TemperatureVue
+Vue.TemperatureVue ..|> java.util.Observer
+Vue.TemperatureVue --o Control.TemperatureController
+Model.TemperatureModel --o Control.TemperatureController
+Model.TemperatureModel --o Vue.TemperatureVue
+Model.TemperatureModel --|> java.util.Observable
+
+
+@enduml
